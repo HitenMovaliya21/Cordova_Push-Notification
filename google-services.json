@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "263550953737",
+    "project_id": "cordova-notification-f7352",
+    "storage_bucket": "cordova-notification-f7352.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263550953737:android:e45c478753290ca6234bd8",
+        "android_client_info": {
+          "package_name": "io.cordova.hellocordova"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "263550953737-3to6n8b9ah933dmc7cp5k8akd6nf4u62.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD14Pb-52xCeFMkXButdC-kDjfrpUtDT2k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "263550953737-3to6n8b9ah933dmc7cp5k8akd6nf4u62.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    input[type=text],
+    select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=submit] {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+
+    div {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+</style>
+
+<body>
+    <div data-role="page" id="add">
+        <div data-role="header">
+            <a target="_blank" href="./index.html#home" class="ui-btn ui-icon-home ui-btn-icon-left">Home</a>
+            <h1>Add Notification</h1>
+        </div>
+
+        <div data-role="main" class="ui-content">
+            <label for="fname">Title</label>
+            <input type="text" id="title" placeholder="Title" />
+
+            <label for="lname">Enter Message</label>
+            <input type="text" id="message" placeholder="Message" />
+
+            <input type="submit" value="Click To Send Notification" onclick="add_reminder()">
+        </div>
+    </div>
+    <script src="cordova.js"></script>
+    <script>
+        function schedule(title, message) {
+            cordova.plugins.notification.local.schedule({
+                id: "1",
+                title: title,
+                text: message,
+                data:{
+                    foreground: true,
+                }
+            });
+            cordova.plugins.notification.local.on('trigger', function (notification) {
+                showToast('triggered: ' + notification.id);
+            }, this);
+            console.log("Reminder added successfully")
+        }
+    </script>
+    <script>
+        function add_reminder() {
+            FirebasePlugin.getToken(token => {
+                navigator.notification.alert(token)
+                console.log(`token: ${token}`)
+            })
+            var title = document.getElementById("title").value;
+            var message = document.getElementById("message").value;
+
+            if (title == "" || message == "") {
+                console.log("Please enter all details");
+                return;
+            }
+
+            cordova.plugins.notification.local.hasPermission(function (granted) {
+                if (granted == true) {
+                    schedule(title, message);
+                }
+                else {
+                    cordova.plugins.notification.local.registerPermission(function (granted) {
+                        if (granted == true) {
+                            schedule(title, message);
+                        }
+                        else {
+                            console.log("Reminder cannot be added because app doesn't have permission");
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>
